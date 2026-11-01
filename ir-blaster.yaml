@@ -25,17 +25,20 @@ wifi:
     ssid: IR Blaster Fallback Hotspot
     password: [REDACTED]
 
+# Opens a setup portal if the device cannot connect to the configured Wi-Fi.
 captive_portal:
 
+# D5 receives the demodulated signal from the IR receiver module.
 remote_receiver:
   - pin: 
       number: D5
-      inverted: true # Optional: use if your receiver module yields an inverted signal
+      inverted: true # Typical IR receiver modules have active-low outputs.
       mode: INPUT_PULLUP
     id: remote_receiver_1
-    #dump: all
+    # Use `dump: all` temporarily when identifying an unknown remote.
     dump: [nec, panasonic]
 
+  # Connect D6 to an IR LED driver; do not power the IR LED directly from the GPIO.
 remote_transmitter:
   - pin: D6
     carrier_duty_percent: 50
@@ -44,6 +47,7 @@ remote_transmitter:
 ####################################
 # BUTTONS
 ####################################
+# Each template button exposes one fixed IR command to Home Assistant.
 button:
 
   ####################################
@@ -99,7 +103,7 @@ button:
 
 
   ####################################
-  # TV BUTTONS
+  # PANASONIC BUTTONS (TV, DVD, VCR)
   ####################################
   - platform: template
     name: "TV Power"
